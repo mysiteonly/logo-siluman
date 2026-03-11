@@ -2,75 +2,91 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/727/727245.png">
 <title>Video Player</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
-font-family:Arial;
+font-family:Arial, sans-serif;
 background:linear-gradient(#6f8f3e,#111);
 color:white;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
 }
 
 .player{
-width:360px;
+width:100%;
+max-width:420px;
+padding:15px;
 text-align:center;
 }
 
 video{
 width:100%;
-border-radius:15px;
+border-radius:16px;
+background:black;
 }
 
 .title{
 margin-top:15px;
-font-size:22px;
+font-size:20px;
 font-weight:bold;
 }
 
 .artist{
 opacity:0.7;
-margin-bottom:15px;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.progress{
+width:100%;
+height:6px;
+background:#444;
+border-radius:10px;
+margin-top:15px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:white;
 }
 
 .controls{
 display:flex;
 justify-content:center;
-gap:20px;
-margin-top:15px;
+align-items:center;
+gap:25px;
+margin-top:20px;
 }
 
 button{
 background:none;
 border:none;
 color:white;
-font-size:30px;
+font-size:28px;
 cursor:pointer;
 }
 
 .play{
-font-size:40px;
+font-size:42px;
 }
 
-.progress{
-width:100%;
-height:5px;
-background:#444;
-border-radius:5px;
-margin-top:15px;
+button:active{
+transform:scale(0.9);
 }
 
-.bar{
-height:5px;
-width:0%;
-background:white;
-border-radius:5px;
-}
 </style>
 </head>
 
@@ -78,12 +94,14 @@ border-radius:5px;
 
 <div class="player">
 
-<video id="video" src="https://mysiteonly.github.io/logo-siluman/brunomars.mp4"></video>
+<video id="video" playsinline>
+<source src="https://mysiteonly.github.io/logo-siluman/brunomars.mp4" type="video/mp4">
+</video>
 
 <div class="title">Die With A Smile</div>
 <div class="artist">Lady Gaga & Bruno Mars</div>
 
-<div class="progress">
+<div class="progress" onclick="seek(event)">
 <div class="bar" id="bar"></div>
 </div>
 
@@ -102,6 +120,7 @@ let playBtn = document.getElementById("play");
 let bar = document.getElementById("bar");
 
 function playPause(){
+
 if(video.paused){
 video.play();
 playBtn.innerHTML="⏸";
@@ -109,11 +128,14 @@ playBtn.innerHTML="⏸";
 video.pause();
 playBtn.innerHTML="▶";
 }
+
 }
 
 video.addEventListener("timeupdate",()=>{
+
 let percent = (video.currentTime / video.duration)*100;
 bar.style.width = percent+"%";
+
 });
 
 function forward(){
@@ -122,6 +144,15 @@ video.currentTime +=10;
 
 function back(){
 video.currentTime -=10;
+}
+
+function seek(e){
+
+let progress = e.currentTarget;
+let pos = e.offsetX / progress.offsetWidth;
+
+video.currentTime = pos * video.duration;
+
 }
 
 </script>
