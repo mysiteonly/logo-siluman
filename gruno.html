@@ -33,7 +33,7 @@ text-align:center;
 
 video{
 width:100%;
-height:52vh;
+max-height:50vh;
 object-fit:contain;
 border-radius:16px;
 background:black;
@@ -64,6 +64,7 @@ overflow:hidden;
 height:100%;
 width:0%;
 background:white;
+will-change:width;
 }
 
 .controls{
@@ -85,10 +86,6 @@ font-size:3vh;
 font-size:4.5vh;
 }
 
-button:active{
-transform:scale(0.9);
-}
-
 </style>
 </head>
 
@@ -96,7 +93,7 @@ transform:scale(0.9);
 
 <div class="player">
 
-<video id="video" playsinline webkit-playsinline preload="metadata">
+<video controls playsinline preload="metadata">
 <source src="https://mysiteonly.github.io/logo-siluman/brunomars.mp4" type="video/mp4">
 </video>
 
@@ -135,20 +132,9 @@ playBtn.innerHTML="▶";
 }
 }
 
-let lastUpdate = 0;
-
-video.addEventListener("timeupdate",()=>{
-
-let now = Date.now();
-
-if(now - lastUpdate < 200) return; 
-
-lastUpdate = now;
-
-let percent=(video.currentTime/video.duration)*100;
-bar.style.width=percent+"%";
-
-});
+video.ontimeupdate = () => {
+bar.style.width = (video.currentTime / video.duration * 100) + "%";
+};
 
 function forward(){
 video.currentTime+=10;
