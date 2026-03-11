@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/727/727245.png">
 <title>Video Player</title>
 
@@ -18,55 +18,44 @@ body{
 font-family:Arial, sans-serif;
 background:linear-gradient(#6f8f3e,#111);
 color:white;
-min-height:100dvh;
+min-height:100vh;
 display:flex;
 justify-content:center;
-align-items:flex-start;
-padding-top:20px;
-padding-bottom:40px;
+align-items:center;
 }
 
 .player{
 width:100%;
-max-width:420px;
-padding:20px;
-margin:auto;
+max-width:320px;
+padding:12px;
+text-align:center;
 }
 
 video{
 width:100%;
-border-radius:18px;
+border-radius:14px;
 background:black;
 }
 
 .title{
-margin-top:20px;
-font-size:22px;
+margin-top:10px;
+font-size:18px;
 font-weight:bold;
 }
 
 .artist{
 opacity:0.7;
-font-size:15px;
-margin-top:5px;
-}
-
-.time{
-display:flex;
-justify-content:space-between;
 font-size:12px;
-opacity:0.7;
-margin-top:6px;
+margin-top:3px;
 }
 
 .progress{
 width:100%;
-height:6px;
+height:4px;
 background:#444;
 border-radius:10px;
 margin-top:10px;
 overflow:hidden;
-cursor:pointer;
 }
 
 .bar{
@@ -79,32 +68,24 @@ background:white;
 display:flex;
 justify-content:center;
 align-items:center;
-gap:35px;
-margin-top:25px;
+gap:18px;
+margin-top:15px;
 }
 
 button{
 background:none;
 border:none;
 color:white;
-font-size:30px;
+font-size:20px;
+cursor:pointer;
 }
 
 .play{
-font-size:50px;
+font-size:30px;
 }
 
 button:active{
 transform:scale(0.9);
-}
-
-.controls{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:35px;
-margin-top:25px;
-padding-bottom:20px;
 }
 
 </style>
@@ -125,11 +106,6 @@ padding-bottom:20px;
 <div class="bar" id="bar"></div>
 </div>
 
-<div class="time">
-<span id="current">0:00</span>
-<span id="duration">0:00</span>
-</div>
-
 <div class="controls">
 <button onclick="back()">⏮</button>
 <button class="play" onclick="playPause()" id="play">▶</button>
@@ -144,9 +120,6 @@ let video = document.getElementById("video");
 let playBtn = document.getElementById("play");
 let bar = document.getElementById("bar");
 
-let current = document.getElementById("current");
-let duration = document.getElementById("duration");
-
 function playPause(){
 
 if(video.paused){
@@ -159,16 +132,10 @@ playBtn.innerHTML="▶";
 
 }
 
-video.addEventListener("loadedmetadata",()=>{
-duration.innerText = format(video.duration);
-});
-
 video.addEventListener("timeupdate",()=>{
 
 let percent = (video.currentTime / video.duration)*100;
 bar.style.width = percent+"%";
-
-current.innerText = format(video.currentTime);
 
 });
 
@@ -186,17 +153,6 @@ let progress = e.currentTarget;
 let pos = e.offsetX / progress.offsetWidth;
 
 video.currentTime = pos * video.duration;
-
-}
-
-function format(time){
-
-let m = Math.floor(time/60);
-let s = Math.floor(time%60);
-
-if(s<10) s="0"+s;
-
-return m+":"+s;
 
 }
 
