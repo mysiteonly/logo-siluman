@@ -58,20 +58,19 @@ background:#444;
 border-radius:10px;
 margin-top:2vh;
 overflow:hidden;
+cursor:pointer;
 }
 
 .bar{
 height:100%;
 width:0%;
 background:white;
-will-change:width;
 }
 
 .controls{
 display:flex;
 justify-content:center;
 align-items:center;
-gap:4vw;
 margin-top:2vh;
 }
 
@@ -79,11 +78,8 @@ button{
 background:none;
 border:none;
 color:white;
-font-size:3vh;
-}
-
-.play{
 font-size:4.5vh;
+cursor:pointer;
 }
 
 </style>
@@ -105,9 +101,7 @@ font-size:4.5vh;
 </div>
 
 <div class="controls">
-<button onclick="back()">⏮</button>
-<button class="play" onclick="playPause()" id="play">▶</button>
-<button onclick="forward()">⏭</button>
+<button onclick="playPause()" id="play">▶</button>
 </div>
 
 </div>
@@ -119,7 +113,7 @@ let playBtn=document.getElementById("play");
 let bar=document.getElementById("bar");
 
 video.addEventListener("loadeddata",()=>{
-    video.currentTime = 0.01;
+video.currentTime = 0.01;
 });
 
 function playPause(){
@@ -135,14 +129,6 @@ playBtn.innerHTML="▶";
 video.ontimeupdate = () => {
 bar.style.width = (video.currentTime / video.duration * 100) + "%";
 };
-
-function forward(){
-video.currentTime+=10;
-}
-
-function back(){
-video.currentTime-=10;
-}
 
 function seek(e){
 let progress=e.currentTarget;
