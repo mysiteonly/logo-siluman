@@ -136,6 +136,11 @@ let pos=e.offsetX/progress.offsetWidth;
 video.currentTime=pos*video.duration;
 }
 
+video.addEventListener("loadeddata",()=>{
+video.currentTime = 0.01;
+video.pause();
+});
+  
 </script>
 
 </body>
