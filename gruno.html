@@ -96,7 +96,7 @@ transform:scale(0.9);
 
 <div class="player">
 
-<video id="video" playsinline>
+<video id="video" playsinline preload="auto">
 <source src="https://mysiteonly.github.io/logo-siluman/brunomars.mp4" type="video/mp4">
 </video>
 
@@ -120,6 +120,10 @@ transform:scale(0.9);
 let video=document.getElementById("video");
 let playBtn=document.getElementById("play");
 let bar=document.getElementById("bar");
+
+video.addEventListener("loadeddata",()=>{
+    video.currentTime = 0.01;
+});
 
 function playPause(){
 if(video.paused){
