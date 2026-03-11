@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+html,body{
+margin:0;
+height:100%;
+background:#000;
+overflow:hidden;
+cursor:none;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:sans-serif;
+}
+
+#k{
+font-size:60px;
+font-weight:900;
+letter-spacing:15px;
+color:#ff2b2b;
+
+animation:b 3s infinite, g 3s infinite;
+}
+
+@keyframes b{
+0%{opacity:.6}
+50%{opacity:1}
+100%{opacity:.6}
+}
+
+@keyframes g{
+0%{transform:translate(0)}
+20%{transform:translate(1px,-1px)}
+40%{transform:translate(-1px,1px)}
+100%{transform:translate(0)}
+}
+</style>
+</head>
+
+<body>
+
+<div id="k">kepo</div>
+
+<script>
+
+// disable klik kanan
+document.addEventListener("contextmenu",e=>e.preventDefault());
+
+// fullscreen
+document.documentElement.requestFullscreen?.().catch(()=>{});
+
+// AUDIO SUPER RINGAN
+let ctx;
+
+try{
+
+ctx=new (window.AudioContext||window.webkitAudioContext)();
+
+const osc=ctx.createOscillator();
+const gain=ctx.createGain();
+
+osc.type="sine";
+osc.frequency.value=60;
+
+gain.gain.value=0;
+
+osc.connect(gain);
+gain.connect(ctx.destination);
+
+osc.start();
+
+// beat
+setInterval(()=>{
+
+gain.gain.setValueAtTime(1,ctx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+
+},500);
+
+}catch(e){}
+
+// blackout
+setTimeout(()=>{
+
+document.body.innerHTML="";
+ctx?.close();
+
+},7000);
+
+</script>
+
+</body>
+</html>
