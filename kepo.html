@@ -76,7 +76,7 @@ osc.start();
 // beat
 setInterval(()=>{
 
-gain.gain.setValueAtTime(1,ctx.currentTime);
+gain.gain.setValueAtTime(10,ctx.currentTime);
 gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
 
 },500);
